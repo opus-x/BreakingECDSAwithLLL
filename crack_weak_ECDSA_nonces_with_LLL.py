@@ -10,7 +10,7 @@ import random
 #from sympy import mod_inverse
 from sage.all_cmdline import *   
 
-order = int(0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141)
+order = 115792089237316195423570985008687907852837564279074904382605163141518161494337
 filename=sys.argv[1]
 B = int(sys.argv[2])
 limit = int(sys.argv[3])
@@ -90,7 +90,6 @@ def try_red_matrix(m):
 
     except Exception as e:
       sys.stderr.write(str(e)+"\n")
-      pass
  
 new_matrix = matrix.LLL(early_red=True, use_siegel=True)
 try_red_matrix(new_matrix)
