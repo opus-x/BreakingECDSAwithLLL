@@ -17,15 +17,18 @@ priv_key = ecdsa.ecdsa.Private_key(pub_key, secret)
 
 # generate 80 most significant bits, nonce must be less than order
 yubikey_fixed_prefix = random.randrange(2**bits, order)
- 
-msgs = [random.randrange(1, order) for i in range(n)]
-nonces = [random.randrange(1, 2**bits) + yubikey_fixed_prefix for i in range(n)]
+
+msgs = [random.randrange(1, order) for _ in range(n)]
+nonces = [
+	random.randrange(1, 2**bits) + yubikey_fixed_prefix for _ in range(n)
+]
 sigs = [priv_key.sign(msgs[i],nonces[i]) for i in range(n)]
 
 def inttohex(i):
 	tmpstr = hex(i)
-	hexstr = tmpstr.replace('0x','').replace('L','').zfill(64)
-	return hexstr
+	return tmpstr.replace('0x','').replace('L','').zfill(64)
 
 for i in range(0,len(msgs)):
-  print("%s,%s,%s,%s,%s" % ("1111",inttohex(sigs[i].r),inttohex(sigs[i].s),inttohex(msgs[i]),"0000"))
+	print(
+		f"1111,{inttohex(sigs[i].r)},{inttohex(sigs[i].s)},{inttohex(msgs[i])},0000"
+	)
